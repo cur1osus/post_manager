@@ -26,10 +26,11 @@ async def send_posts(
     redis: Redis,
     bot: Bot,
 ) -> None:
-    last_post_id: int = int(await redis.get(key_last_post_id))
-    logger.info(f"{last_post_id=}")
+    last_post_id = await redis.get(key_last_post_id)
+
     async with sessionmaker() as session:
         if last_post_id:
+            last_post_id = int(last_post_id)
             posts = (
                 await session.scalars(select(Post).where(Post.id > last_post_id))
             ).all()
