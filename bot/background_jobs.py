@@ -3,6 +3,7 @@ import logging
 from typing import Final
 
 from aiogram import Bot
+from aiogram.exceptions import TelegramBadRequest
 from redis.asyncio import Redis
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -85,7 +86,14 @@ async def send_posts(
                 )
                 content = await fn.Text.highlight_words(content, matches_triggers)
 
-                await bot.send_message(user.user_id, f"{content} \n\n{link_on_message}")
+                try:
+                    await bot.send_message(
+                        user.user_id, f"{content} \n\n{link_on_message}"
+                    )
+                except TelegramBadRequest as e:
+                    logger.error(e)
+                    user.receive_notifications = False
+
                 useless = False
 
             if useless:
