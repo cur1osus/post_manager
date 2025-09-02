@@ -91,7 +91,7 @@ async def send_posts(
                         user.user_id, f"{content} \n\n{link_on_message}"
                     )
                 except TelegramBadRequest as e:
-                    logger.error(e)
+                    logger.info(e)
                     user.receive_notifications = False
 
                 useless = False
