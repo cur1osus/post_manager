@@ -139,7 +139,7 @@ async def channels_ids_to_add(
         if r := fn.Text.clean_invite_link(username):
             usernames_to_add.append(r)
         elif username.startswith("-"):
-            usernames_to_add.append(f"-{username}")
+            usernames_to_add.append(username)
         elif not username.startswith("@"):
             usernames_to_add.append(f"@{username}")
         else:
