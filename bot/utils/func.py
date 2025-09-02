@@ -396,6 +396,19 @@ class Function:
 
     class Text:
         @staticmethod
+        def clean_invite_link(link) -> str:
+            link = (
+                link.strip()
+                .replace("https://", "")
+                .replace("http://", "")
+                .replace("t.me/", "")
+            )
+
+            if match := re.match(r"^(?:joinchat/|\+)([a-zA-Z0-9_-]+)$", link, re.I):
+                return match.group(1)
+            return None
+
+        @staticmethod
         async def _replace_by_slice(text, start, end, replacement):
             """
             Заменяет подстроку в тексте по индексам среза (start, end) на новую строку.
