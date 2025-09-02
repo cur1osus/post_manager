@@ -396,7 +396,7 @@ class Function:
 
     class Text:
         @staticmethod
-        def clean_invite_link(link) -> str:
+        def clean_invite_link(link) -> str | None:
             link = (
                 link.strip()
                 .replace("https://", "")

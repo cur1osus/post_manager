@@ -136,10 +136,12 @@ async def channels_ids_to_add(
     usernames_to_add = []
     for username in message.text.splitlines():
         username = username.strip()
-        if r := fn.Text.clean_invite_link(username):
-            usernames_to_add.append(r)
-        elif not username.startswith("@"):
+        if not username.startswith("@"):
             usernames_to_add.append(f"@{username}")
+        elif r := fn.Text.clean_invite_link(username):
+            usernames_to_add.append(r)
+        elif username.strip("-").isdigit():
+            usernames_to_add.append(f"-{username}")
         else:
             usernames_to_add.append(username)
 
