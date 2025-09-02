@@ -82,4 +82,4 @@ class MonitoringChannel(Base):
 
     username: Mapped[str] = mapped_column(String(100))
     channel_id: Mapped[int] = mapped_column(BigInteger, nullable=True)
-    title: Mapped[str] = mapped_column(String(100), nullable=True)
+    title: Mapped[str] = mapped_column(String(500), nullable=True)
